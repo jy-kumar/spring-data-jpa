@@ -16,14 +16,46 @@ public class EmployeeController {
     @PostMapping("/emp")
     public ResponseEntity<String> saveEmployee(@RequestBody Employee employee){
         if(service.save(employee))
-            return new ResponseEntity<String>("Success", HttpStatus.OK);
+            return new ResponseEntity<String>("Success saved", HttpStatus.OK);
         else
-            return new ResponseEntity<String>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>("Failed to save", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/emp")
     public List<Employee> getAllEmployee(){
         return service.getAllEmployee();
+    }
+
+    @PutMapping("/emp")
+    public ResponseEntity<String> updateEmployee(@RequestBody Employee employee){
+        if(service.update(employee))
+            return new ResponseEntity<String>("Success updated", HttpStatus.OK);
+        else
+            return new ResponseEntity<String>("Data not found", HttpStatus.NOT_FOUND);
+    }
+
+    @PatchMapping("/emp")
+    public ResponseEntity<String> updateEmployeeInfo(@RequestBody Employee employee){
+        if(service.update(employee))
+            return new ResponseEntity<String>("Success updated", HttpStatus.OK);
+        else
+            return new ResponseEntity<String>("Data not found", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/emp")
+    public ResponseEntity<String> deleteEmployee(@RequestBody Employee employee){
+        if(service.delete(employee))
+            return new ResponseEntity<String>("Deleted updated", HttpStatus.OK);
+        else
+            return new ResponseEntity<String>("Data not found", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/emp/{id}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable Integer id){
+        if(service.delete(id))
+            return new ResponseEntity<String>("Success updated", HttpStatus.OK);
+        else
+            return new ResponseEntity<String>("Data not found", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/emp/{id}")
